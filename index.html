@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <nav>
+        <ul>
+            <li><a href="home.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colton Egbert - 3D Building Prototype</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Sidebar Controls -->
+    <div id="sidebar">
+        <div id="title">Colton Egbert - 3D Building Prototype</div>
+
+        <label>Zoom:</label>
+        <input type="range" id="zoomControl" min="10" max="100" value="30">
+
+        <label>Building Width:</label>
+        <input type="range" id="widthControl" min="5" max="30" value="10">
+
+        <label>Building Height:</label>
+        <input type="range" id="heightControl" min="5" max="20" value="5">
+
+        <label>Building Length:</label>
+        <input type="range" id="lengthControl" min="10" max="50" value="15">
+
+        <label>Building Color:</label>
+        <input type="color" id="colorControl" value="#0077ff">
+    </div>
+
+    <div id="priceDisplay">Price: $0.00</div>
+
+    <button onclick="generatePDF()">Export to PDF</button>
+
+    <script src="script.js"></script>
+
+    <label>Select Preset:</label>
+<select onchange="loadPreset(this.value)">
+    <option value="0">Preset 1</option>
+    <option value="1">Preset 2</option>
+</select>
+
+<label>Roof Style:</label>
+<select id="roofStyleControl" onchange="updateRoofStyle()">
+    <option value="flat">Flat</option>
+    <option value="gabled">Gabled</option>
+</select>
+
+<button onclick="downloadSnapshot()">Download Snapshot</button>
+
+
+</body>
+</html>
