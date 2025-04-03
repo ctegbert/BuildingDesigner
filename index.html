@@ -11,19 +11,32 @@
     <style>
         #container { display: flex; height: 100vh; }
         #sidebar {
-            width: 250px;
-            padding: 20px;
+            width: 300px;
+            padding: 25px;
             background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 20px;
             z-index: 1;
             transition: width 0.3s;
         }
         #price { font-size: 16px; font-weight: bold; color: #0077ff; }
+        .color-option {
+            width: 30px;
+            height: 30px;
+            display: inline-block;
+            margin: 2px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+        }
+        .color-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
         @media (max-width: 768px) {
-            #sidebar { width: 200px; }
+            #sidebar { width: 250px; }
             #container { flex-direction: column; }
             #sidebar { height: auto; }
         }
@@ -52,12 +65,41 @@
             <input type="range" id="lengthControl" min="10" max="50" value="15">
 
             <label>Building Color:</label>
-            <input type="color" id="colorControl" value="#0077ff">
+            <div class="color-options" id="buildingColorControl">
+                <div class="color-option" style="background-color: #ff0000" data-color="#ff0000"></div>
+                <div class="color-option" style="background-color: #0000ff" data-color="#0000ff"></div>
+                <div class="color-option" style="background-color: #ffffff" data-color="#ffffff"></div>
+                <div class="color-option" style="background-color: #000000" data-color="#000000"></div>
+                <div class="color-option" style="background-color: #808080" data-color="#808080"></div>
+                <div class="color-option" style="background-color: #008000" data-color="#008000"></div>
+                <div class="color-option" style="background-color: #ffff00" data-color="#ffff00"></div>
+                <div class="color-option" style="background-color: #8b4513" data-color="#8b4513"></div>
+            </div>
+
+            <label>Roof Color:</label>
+            <div class="color-options" id="roofColorControl">
+                <div class="color-option" style="background-color: #ff0000" data-color="#ff0000"></div>
+                <div class="color-option" style="background-color: #0000ff" data-color="#0000ff"></div>
+                <div class="color-option" style="background-color: #ffffff" data-color="#ffffff"></div>
+                <div class="color-option" style="background-color: #000000" data-color="#000000"></div>
+                <div class="color-option" style="background-color: #808080" data-color="#808080"></div>
+                <div class="color-option" style="background-color: #008000" data-color="#008000"></div>
+                <div class="color-option" style="background-color: #ffff00" data-color="#ffff00"></div>
+                <div class="color-option" style="background-color: #8b4513" data-color="#8b4513"></div>
+            </div>
 
             <label>Roof Style:</label>
             <select id="roofControl">
                 <option value="flat">Flat</option>
                 <option value="gabled">Gabled</option>
+                <option value="aframe">A-Frame</option>
+            </select>
+
+            <label>Ground Texture:</label>
+            <select id="groundTextureControl">
+                <option value="grass">Grass</option>
+                <option value="gravel">Gravel</option>
+                <option value="white">Plain White</option>
             </select>
 
             <div id="price">Estimated Cost: $0</div>
@@ -67,129 +109,7 @@
         </div>
     </div>
 
-    <script>
-        const { jsPDF } = window.jspdf;
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(30, 15, 40);
-
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0xeeeeee);
-        document.getElementById('container').appendChild(renderer.domElement);
-
-        let building, roof;
-        const material = new THREE.MeshStandardMaterial({ color: 0x0077ff });
-        updateBuilding();
-
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
-        directionalLight.position.set(5, 10, 5);
-        scene.add(directionalLight);
-
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.dampingFactor = 0.05;
-        controls.screenSpacePanning = false;
-        controls.maxPolarAngle = Math.PI / 2;
-
-        function updateBuilding() {
-            const width = +document.getElementById("widthControl").value;
-            const height = +document.getElementById("heightControl").value;
-            const length = +document.getElementById("lengthControl").value;
-            const roofStyle = document.getElementById("roofControl").value;
-
-            scene.remove(building);
-            scene.remove(roof);
-
-            const baseGeometry = new THREE.BoxGeometry(width, height, length);
-            building = new THREE.Mesh(baseGeometry, material);
-            scene.add(building);
-
-            if (roofStyle === "flat") {
-                const roofGeometry = new THREE.BoxGeometry(width + 1, 0.5, length + 1);
-                roof = new THREE.Mesh(roofGeometry, material);
-                roof.position.y = height / 2 + 0.25;
-            } else if (roofStyle === "gabled") {
-                const roofGeometry = new THREE.ConeGeometry(width / 2, 2, 4);
-                roof = new THREE.Mesh(roofGeometry, material);
-                roof.position.y = height / 2 + 1;
-                roof.rotation.y = Math.PI / 4;
-            }
-            scene.add(roof);
-
-            updatePrice(width, height, length);
-        }
-
-        function updateZoom() {
-            const zoom = +document.getElementById("zoomControl").value;
-            camera.position.set(zoom, zoom / 2, zoom * 1.2);
-        }
-
-        function updateColor() {
-            const color = document.getElementById("colorControl").value;
-            material.color.set(color);
-        }
-
-        function updatePrice(width, height, length) {
-            const volume = width * height * length;
-            const cost = volume * 50; // $50 per cubic unit
-            document.getElementById("price").textContent = `Estimated Cost: $${cost.toLocaleString()}`;
-            return cost;
-        }
-
-        function exportPDF() {
-            const width = document.getElementById("widthControl").value;
-            const height = document.getElementById("heightControl").value;
-            const length = document.getElementById("lengthControl").value;
-            const color = document.getElementById("colorControl").value;
-            const roofStyle = document.getElementById("roofControl").value;
-            const cost = updatePrice(width, height, length);
-
-            const doc = new jsPDF();
-            doc.setFontSize(16);
-            doc.text("Building Design Summary", 10, 10);
-            doc.setFontSize(12);
-            doc.text(`Width: ${width}m`, 10, 20);
-            doc.text(`Height: ${height}m`, 10, 30);
-            doc.text(`Length: ${length}m`, 10, 40);
-            doc.text(`Color: ${color}`, 10, 50);
-            doc.text(`Roof Style: ${roofStyle}`, 10, 60);
-            doc.text(`Estimated Cost: $${cost.toLocaleString()}`, 10, 70);
-            doc.save("building_design.pdf");
-        }
-
-        function takeSnapshot() {
-            renderer.render(scene, camera);
-            const imgData = renderer.domElement.toDataURL("image/png");
-            const link = document.createElement("a");
-            link.href = imgData;
-            link.download = "building_snapshot.png";
-            link.click();
-        }
-
-        document.getElementById("widthControl").addEventListener("input", updateBuilding);
-        document.getElementById("heightControl").addEventListener("input", updateBuilding);
-        document.getElementById("lengthControl").addEventListener("input", updateBuilding);
-        document.getElementById("zoomControl").addEventListener("input", updateZoom);
-        document.getElementById("colorControl").addEventListener("input", updateColor);
-        document.getElementById("roofControl").addEventListener("change", updateBuilding);
-        document.getElementById("exportPDF").addEventListener("click", exportPDF);
-        document.getElementById("snapshot").addEventListener("click", takeSnapshot);
-
-        function animate() {
-            requestAnimationFrame(animate);
-            controls.update();
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        window.addEventListener("resize", () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
+    <script src="sceneSetup.js"></script>
+    <script src="buildingLogic.js"></script>
 </body>
 </html>
