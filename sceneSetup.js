@@ -31,10 +31,10 @@ const roofMaterial = new THREE.MeshBasicMaterial({
     polygonOffset: true,
     polygonOffsetFactor: 1,
     polygonOffsetUnits: 1,
-    color: 0xffffff // Neutral white to let texture show through
+    color: 0xffffff 
 });
 
-// Ground plane with initial grass texture (increased to 120x120)
+
 const grassTexture = textureLoader.load('images/grass.jpg');
 const gravelTexture = textureLoader.load('images/gravel.jpg');
 grassTexture.wrapS = grassTexture.wrapT = THREE.RepeatWrapping;
@@ -49,7 +49,7 @@ ground.rotation.x = -Math.PI / 2;
 ground.position.y = -0.1;
 scene.add(ground);
 
-// Lighting (ambient only, as per your reversion)
+
 const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
 scene.add(ambientLight);
 

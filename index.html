@@ -19,28 +19,28 @@
             position: relative; /* Allow absolute positioning of header elements and logo overlay */
         }
         #sidebar {
-            width: 200px; /* Reduced thickness */
-            padding: 15px; /* Adjusted padding to fit new width */
+            width: 200px; 
+            padding: 15px; 
             background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            gap: 15px; /* Adjusted gap for new layout */
-            z-index: 0; /* Lowered to allow nav to stay on top */
+            gap: 15px; 
+            z-index: 0; 
             transition: width 0.3s;
             overflow-y: auto; /* Enable scrolling for sidebar */
             height: 100vh; /* Ensure sidebar takes full viewport height */
             box-sizing: border-box;
-            min-width: 200px; /* Ensure minimum width to prevent shrinking */
+            min-width: 200px; 
         }
         #header-controls {
             position: absolute;
             top: 10px;
-            left: 210px; /* Adjusted to match new sidebar width (200px + 10px gap) */
+            left: 210px; 
             display: flex;
             gap: 15px;
             align-items: center;
-            z-index: 1; /* Ensure it stays above the 3D model */
+            z-index: 1; 
         }
         #price {
             font-size: 16px;
@@ -72,9 +72,9 @@
             position: absolute;
             bottom: 10px;
             right: 10px;
-            width: 150px; /* Increased from 100px for bigger and more obvious logo */
-            opacity: 0.7; /* Increased from 0.5 for more visibility */
-            z-index: 1; /* Above the 3D model but below header controls */
+            width: 150px; 
+            opacity: 0.7; 
+            z-index: 1; 
             pointer-events: none; /* Prevent interaction with the logo */
         }
         #main-logo {
@@ -97,7 +97,7 @@
                 top: 60px; /* Position below the nav bar */
             }
             #logo-overlay {
-                width: 120px; /* Increased from 80px for bigger logo on mobile */
+                width: 120px; 
                 bottom: 5px;
                 right: 5px;
             }

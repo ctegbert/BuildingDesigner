@@ -1,6 +1,6 @@
 // buildingLogic.js
 function updateBuilding() {
-    createBuilding(); // Fixed typo from create- Building()
+    createBuilding(); 
     const width = +document.getElementById("widthControl").value;
     const height = +document.getElementById("heightControl").value;
     const length = +document.getElementById("lengthControl").value;
@@ -108,7 +108,7 @@ function exportPDF() {
 
     // Load the logo image for the PDF
     const logoImg = new Image();
-    logoImg.src = 'images/CMB.png'; // Use the normal logo for the PDF
+    logoImg.src = 'images/CMB.png'; 
     logoImg.onload = function() {
         // Add the logo to the PDF (centered at the top)
         const logoWidth = 50; // Adjust size as needed
@@ -116,10 +116,10 @@ function exportPDF() {
         const logoX = (doc.internal.pageSize.getWidth() - logoWidth) / 2; // Center horizontally
         doc.addImage(logoImg, 'PNG', logoX, 10, logoWidth, logoHeight);
 
-        // Add a horizontal line below the logo (shifted down to avoid cutting through)
+        
         doc.setLineWidth(0.5);
         doc.setDrawColor(0, 77, 153);
-        doc.line(20, 70, 190, 70); // Moved from y=40 to y=50
+        doc.line(20, 70, 190, 70); 
 
         // Set up the content
         doc.setFont("helvetica", "normal");
@@ -149,7 +149,7 @@ function exportPDF() {
         doc.text(`Roof Color: ${roofColor}`, 20, yPosition);
         yPosition += lineHeight;
         doc.text(`Roof Style: ${roofStyle === 'aframe' ? 'A-Frame' : roofStyle.charAt(0).toUpperCase() + roofStyle.slice(1)}`, 20, yPosition); // Added hyphen to A-Frame
-        yPosition += lineHeight + 5; // Extra space before the cost
+        yPosition += lineHeight + 5; 
 
         // Total price
         doc.setFont("helvetica", "bold");
