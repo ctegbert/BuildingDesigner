@@ -3,8 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colton Egbert - Home</title>
+    <title>Colton's Metal Buildings - Home</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        nav {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 1;
+        }
+        nav a {
+            margin-left: 15px;
+            text-decoration: none;
+            color: #0077ff;
+            font-weight: bold;
+        }
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .content img {
+            width: 100%;
+            max-width: 300px;
+            margin-bottom: 20px;
+        }
+        .content h1 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .content p {
+            font-size: 18px;
+            color: #666;
+            max-width: 800px;
+            margin: 10px 0;
+        }
+        .content .cta-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #0077ff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .content .cta-button:hover {
+            background-color: #0055cc;
+        }
+    </style>
 </head>
 <body>
     <nav>
@@ -13,9 +70,12 @@
         <a href="index.html">Design</a>
     </nav>
     <div class="content">
-        <h1>Welcome to 3D Building Designer</h1>
-        <p>Create your dream building with our interactive 3D tool. Customize dimensions, colors, and more!</p>
-        <a href="index.html" class="button">Start Designing Now</a>
+        <img src="images/CMB.png" alt="Colton's Metal Buildings Logo">
+        <h1>Welcome to Colton's Metal Buildings</h1>
+        <p>At Colton's Metal Buildings, we specialize in crafting high-quality, durable metal structures tailored to your needs. Whether you're looking for a sturdy barn, a spacious workshop, or a custom storage solution, our team is here to bring your vision to life.</p>
+        <p>With years of experience in the industry, we pride ourselves on using top-grade materials and innovative design techniques to ensure your building stands the test of time. Our interactive 3D design tool allows you to customize every detail, from dimensions to colors, so you can see your dream building before construction begins.</p>
+        <p>Ready to get started? Explore our design tool or contact us to discuss your project today!</p>
+        <a href="index.html" class="cta-button">Design Your Building Now</a>
     </div>
 </body>
 </html>

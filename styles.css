@@ -7,12 +7,14 @@ body {
 nav {
     position: absolute;
     top: 10px;
-    right: 10px;
+    right: 10px; /* Restored to upper right */
     display: flex;
     gap: 15px;
     padding: 10px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 5px;
+    align-items: center;
+    z-index: 1; /* Ensure nav stays above sidebar */
 }
 
 nav a {
@@ -24,6 +26,23 @@ nav a {
 
 nav a:hover {
     color: #0055cc;
+}
+
+nav button {
+    padding: 5px 10px;
+    font-size: 12px;
+    margin-right: 10px;
+    background: none; /* Remove background */
+    border: 1px solid #0077ff; /* Add border for visibility */
+    color: #0077ff;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, color 0.3s;
+}
+
+nav button:hover {
+    background: #0077ff;
+    color: white;
 }
 
 .title {
@@ -90,18 +109,19 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 button {
-    width: 100%;
-    padding: 10px;
-    background: #0077ff;
-    color: white;
-    border: none;
+    padding: 5px 10px;
+    font-size: 12px;
+    background: none; /* Remove background */
+    border: 1px solid #0077ff; /* Add border for visibility */
+    color: #0077ff;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
+    transition: background 0.3s, color 0.3s;
 }
 
 button:hover {
-    background: #0055cc;
+    background: #0077ff;
+    color: white;
 }
 
 .content {
@@ -136,14 +156,29 @@ button:hover {
     background: #0055cc;
 }
 
+.slider-value {
+    display: block;
+    font-size: 12px;
+    color: #333;
+    text-align: center;
+    margin-top: 5px;
+}
+
 @media (max-width: 768px) {
     nav {
         top: 0;
         right: 0;
         width: 100%;
         justify-content: center;
+        flex-wrap: wrap;
     }
-    .content {
-        margin: 80px 20px;
+    #sidebar {
+        width: 150px; /* Reduced mobile thickness */
+        height: auto; /* Allow natural height on mobile */
+        padding: 10px; /* Adjusted padding for mobile */
+    }
+    #container {
+        flex-direction: column;
+        height: auto;
     }
 }

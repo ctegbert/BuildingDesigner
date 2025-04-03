@@ -3,25 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Colton Egbert - 3D Building Designer</title>
+    <title>Colton's Metal Buildings - 3D Building Designer</title>
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
-        #container { display: flex; height: 100vh; }
+        body {
+            margin: 0;
+            overflow: hidden; /* Prevent page scrolling */
+        }
+        #container {
+            display: flex;
+            height: 100vh;
+            position: relative; /* Allow absolute positioning of header elements and logo overlay */
+        }
         #sidebar {
-            width: 300px;
-            padding: 25px;
+            width: 200px; /* Reduced thickness */
+            padding: 15px; /* Adjusted padding to fit new width */
             background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
             box-shadow: 2px 0 5px rgba(0,0,0,0.1);
             display: flex;
             flex-direction: column;
-            gap: 20px;
-            z-index: 1;
+            gap: 15px; /* Adjusted gap for new layout */
+            z-index: 0; /* Lowered to allow nav to stay on top */
             transition: width 0.3s;
+            overflow-y: auto; /* Enable scrolling for sidebar */
+            height: 100vh; /* Ensure sidebar takes full viewport height */
+            box-sizing: border-box;
+            min-width: 200px; /* Ensure minimum width to prevent shrinking */
         }
-        #price { font-size: 16px; font-weight: bold; color: #0077ff; }
+        #header-controls {
+            position: absolute;
+            top: 10px;
+            left: 210px; /* Adjusted to match new sidebar width (200px + 10px gap) */
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            z-index: 1; /* Ensure it stays above the 3D model */
+        }
+        #price {
+            font-size: 16px;
+            font-weight: bold;
+            color: #0077ff;
+        }
         .color-option {
             width: 30px;
             height: 30px;
@@ -34,68 +59,110 @@
             display: flex;
             flex-wrap: wrap;
             gap: 5px;
+            justify-content: center; /* Center the color options */
+        }
+        .slider-value {
+            display: block;
+            font-size: 12px;
+            color: #333;
+            text-align: center;
+            margin-top: 5px;
+        }
+        #logo-overlay {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 150px; /* Increased from 100px for bigger and more obvious logo */
+            opacity: 0.7; /* Increased from 0.5 for more visibility */
+            z-index: 1; /* Above the 3D model but below header controls */
+            pointer-events: none; /* Prevent interaction with the logo */
+        }
+        #main-logo {
+            width: 100%;
+            max-width: 170px; /* Fit within sidebar width */
+            margin-bottom: 10px;
         }
         @media (max-width: 768px) {
-            #sidebar { width: 250px; }
-            #container { flex-direction: column; }
-            #sidebar { height: auto; }
+            #sidebar {
+                width: 150px; /* Reduced mobile thickness */
+                height: auto; /* Allow natural height on mobile */
+                padding: 10px; /* Adjusted padding for mobile */
+            }
+            #container {
+                flex-direction: column;
+                height: auto;
+            }
+            #header-controls {
+                left: 10px; /* Adjust for mobile layout */
+                top: 60px; /* Position below the nav bar */
+            }
+            #logo-overlay {
+                width: 120px; /* Increased from 80px for bigger logo on mobile */
+                bottom: 5px;
+                right: 5px;
+            }
+            #main-logo {
+                max-width: 130px; /* Fit within mobile sidebar width */
+            }
         }
     </style>
 </head>
 <body>
-    <nav>
+    <nav style="z-index: 1;">
         <a href="home.html">Home</a>
         <a href="about.html">About</a>
         <a href="index.html">Design</a>
     </nav>
     <div id="container">
         <div id="sidebar">
-            <div class="title">3D Building Designer</div>
-
-            <label>Zoom:</label>
-            <input type="range" id="zoomControl" min="10" max="100" value="30">
+            <img id="main-logo" src="images/CMB.png" alt="Colton's Metal Buildings Logo">
+            <div class="title">Colton's Metal Buildings</div>
 
             <label>Building Width:</label>
-            <input type="range" id="widthControl" min="5" max="30" value="10">
+            <input type="range" id="widthControl" min="10" max="100" value="30">
+            <span class="slider-value" id="widthValue"></span>
 
             <label>Building Height:</label>
-            <input type="range" id="heightControl" min="5" max="20" value="5">
+            <input type="range" id="heightControl" min="8" max="20" value="10">
+            <span class="slider-value" id="heightValue"></span>
 
             <label>Building Length:</label>
-            <input type="range" id="lengthControl" min="10" max="50" value="15">
+            <input type="range" id="lengthControl" min="10" max="100" value="40">
+            <span class="slider-value" id="lengthValue"></span>
 
-            <label>Roof Pitch (0.5 to 2.0):</label>
-            <input type="range" id="pitchControl" min="0.5" max="2.0" step="0.1" value="1.0">
+            <label>Roof Pitch (2/12 to 12/12):</label>
+            <input type="range" id="pitchControl" min="0.5" max="3.0" step="0.1" value="1.0">
+            <span class="slider-value" id="pitchValue"></span>
 
             <label>Building Color:</label>
             <div class="color-options" id="buildingColorControl">
-                <div class="color-option" style="background-color: #ff0000" data-color="#ff0000"></div>
-                <div class="color-option" style="background-color: #0000ff" data-color="#0000ff"></div>
-                <div class="color-option" style="background-color: #ffffff" data-color="#ffffff"></div>
-                <div class="color-option" style="background-color: #000000" data-color="#000000"></div>
-                <div class="color-option" style="background-color: #808080" data-color="#808080"></div>
-                <div class="color-option" style="background-color: #008000" data-color="#008000"></div>
-                <div class="color-option" style="background-color: #ffff00" data-color="#ffff00"></div>
-                <div class="color-option" style="background-color: #8b4513" data-color="#8b4513"></div>
+                <div class="color-option" style="background-color: #cc3333" data-color="#cc3333"></div> <!-- Muted red -->
+                <div class="color-option" style="background-color: #336699" data-color="#336699"></div> <!-- Muted blue -->
+                <div class="color-option" style="background-color: #e6e6e6" data-color="#e6e6e6" selected></div> <!-- Light gray -->
+                <div class="color-option" style="background-color: #4d4d4d" data-color="#4d4d4d"></div> <!-- Dark gray -->
+                <div class="color-option" style="background-color: #999999" data-color="#999999"></div> <!-- Medium gray -->
+                <div class="color-option" style="background-color: #669966" data-color="#669966"></div> <!-- Muted green -->
+                <div class="color-option" style="background-color: #cccc99" data-color="#cccc99"></div> <!-- Muted yellow -->
+                <div class="color-option" style="background-color: #996633" data-color="#996633"></div> <!-- Muted brown -->
             </div>
 
             <label>Roof Color:</label>
             <div class="color-options" id="roofColorControl">
-                <div class="color-option" style="background-color: #ff0000" data-color="#ff0000"></div>
-                <div class="color-option" style="background-color: #0000ff" data-color="#0000ff"></div>
-                <div class="color-option" style="background-color: #ffffff" data-color="#ffffff"></div>
-                <div class="color-option" style="background-color: #000000" data-color="#000000"></div>
-                <div class="color-option" style="background-color: #808080" data-color="#808080"></div>
-                <div class="color-option" style="background-color: #008000" data-color="#008000"></div>
-                <div class="color-option" style="background-color: #ffff00" data-color="#ffff00"></div>
-                <div class="color-option" style="background-color: #8b4513" data-color="#8b4513"></div>
+                <div class="color-option" style="background-color: #cc3333" data-color="#cc3333"></div> <!-- Muted red -->
+                <div class="color-option" style="background-color: #336699" data-color="#336699"></div> <!-- Muted blue -->
+                <div class="color-option" style="background-color: #e6e6e6" data-color="#e6e6e6"></div> <!-- Light gray -->
+                <div class="color-option" style="background-color: #4d4d4d" data-color="#4d4d4d" selected></div> <!-- Dark gray -->
+                <div class="color-option" style="background-color: #999999" data-color="#999999"></div> <!-- Medium gray -->
+                <div class="color-option" style="background-color: #669966" data-color="#669966"></div> <!-- Muted green -->
+                <div class="color-option" style="background-color: #cccc99" data-color="#cccc99"></div> <!-- Muted yellow -->
+                <div class="color-option" style="background-color: #996633" data-color="#996633"></div> <!-- Muted brown -->
             </div>
 
             <label>Roof Style:</label>
             <select id="roofControl">
                 <option value="flat">Flat</option>
+                <option value="aframe" selected>A-Frame</option>
                 <option value="gabled">Gabled</option>
-                <option value="aframe">A-Frame</option>
             </select>
 
             <label>Ground Texture:</label>
@@ -104,12 +171,13 @@
                 <option value="gravel">Gravel</option>
                 <option value="white">Plain White</option>
             </select>
-
+        </div>
+        <div id="header-controls">
             <div id="price">Estimated Cost: $0</div>
-
             <button id="exportPDF">Export to PDF</button>
             <button id="snapshot">Download Snapshot</button>
         </div>
+        <img id="logo-overlay" src="images/CMBtrans.png" alt="Colton's Metal Buildings Overlay">
     </div>
 
     <script src="sceneSetup.js"></script>
