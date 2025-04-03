@@ -5,61 +5,116 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colton's Metal Buildings - Home</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
+            padding: 0;
+            box-sizing: border-box;
         }
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background: url('images/homebg.jpg') no-repeat center center/cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+        /* Navigation */
         nav {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 1;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
         }
         nav a {
-            margin-left: 15px;
-            text-decoration: none;
             color: #0077ff;
-            font-weight: bold;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 700;
+            transition: color 0.4s ease;
         }
+        nav a:hover {
+            color: #0055cc;
+        }
+        /* Content Box */
         .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 40px;
             text-align: center;
-            background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
-            padding: 20px;
-            min-height: 100vh;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%),
+                        linear-gradient(to left, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%),
+                        linear-gradient(to top, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeInCustom 1.8s ease-out 0.5s forwards;
+            position: relative;
+            z-index: 1;
         }
         .content img {
-            width: 100%;
             max-width: 300px;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
         .content h1 {
-            font-size: 36px;
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 56px;
+            font-weight: 700;
+            color: #0077ff;
+            margin-bottom: 20px;
+        }
+        .content h2 {
+            color: #0077ff;
+            margin-bottom: 25px;
+            font-size: 32px;
         }
         .content p {
-            font-size: 18px;
             color: #666;
-            max-width: 800px;
-            margin: 10px 0;
+            margin-bottom: 25px;
+            font-size: 18px;
         }
-        .content .cta-button {
+        .cta-button {
             display: inline-block;
-            margin-top: 20px;
-            padding: 10px 20px;
+            padding: 18px 35px;
             background-color: #0077ff;
             color: white;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
+            border-radius: 8px;
+            font-weight: 700;
+            transition: background-color 0.4s ease, transform 0.4s ease;
+            box-shadow: 0 3px 10px rgba(0, 119, 255, 0.3);
         }
-        .content .cta-button:hover {
+        .cta-button:hover {
             background-color: #0055cc;
+            transform: translateY(-3px);
+        }
+        /* Custom Animations */
+        @keyframes fadeInCustom {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                top: 10px;
+                right: 10px;
+            }
+            nav a {
+                margin: 0 10px;
+                display: block;
+            }
+            .content {
+                margin: 30px auto;
+                padding: 20px;
+            }
+            .content h1 {
+                font-size: 40px;
+            }
+            .content h2 {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
@@ -70,8 +125,9 @@
         <a href="index.html">Design</a>
     </nav>
     <div class="content">
-        <img src="images/CMB.png" alt="Colton's Metal Buildings Logo">
-        <h1>Welcome to Colton's Metal Buildings</h1>
+        <img src="images/CMBtrans.png" alt="Colton's Metal Buildings Logo">
+        <h1>Making Your Vision Come to Life</h1>
+        <h2>Welcome to Colton's Metal Buildings</h2>
         <p>At Colton's Metal Buildings, we specialize in crafting high-quality, durable metal structures tailored to your needs. Whether you're looking for a sturdy barn, a spacious workshop, or a custom storage solution, our team is here to bring your vision to life.</p>
         <p>With years of experience in the industry, we pride ourselves on using top-grade materials and innovative design techniques to ensure your building stands the test of time. Our interactive 3D design tool allows you to customize every detail, from dimensions to colors, so you can see your dream building before construction begins.</p>
         <p>Ready to get started? Explore our design tool or contact us to discuss your project today!</p>

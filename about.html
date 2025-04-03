@@ -5,60 +5,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colton's Metal Buildings - About</title>
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <style>
-        body {
+        * {
             margin: 0;
-            font-family: Arial, sans-serif;
+            padding: 0;
+            box-sizing: border-box;
         }
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #333;
+            line-height: 1.6;
+            background: url('images/aboutbg.jpg') no-repeat center center/cover;
+            background-attachment: fixed;
+            min-height: 100vh;
+            position: relative;
+        }
+        /* Navigation */
         nav {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            z-index: 1;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
         }
         nav a {
-            margin-left: 15px;
-            text-decoration: none;
             color: #0077ff;
-            font-weight: bold;
+            text-decoration: none;
+            margin-left: 25px;
+            font-weight: 700;
+            transition: color 0.4s ease;
         }
+        nav a:hover {
+            color: #0055cc;
+        }
+        /* Content Box */
         .content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            max-width: 1100px;
+            margin: 60px auto;
+            padding: 40px;
             text-align: center;
-            background: linear-gradient(135deg, #f4f4f4, #e0e0e0);
-            padding: 20px;
-            min-height: 100vh;
+            background: linear-gradient(to right, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%),
+                        linear-gradient(to left, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%),
+                        linear-gradient(to bottom, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%),
+                        linear-gradient(to top, rgba(255, 255, 255, 0.6) 30%, rgba(255, 255, 255, 0.3) 70%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            animation: fadeInCustom 1.8s ease-out 0.5s forwards;
+            position: relative;
+            z-index: 1;
         }
         .content img {
-            width: 100%;
-            max- width: 300px;
-            margin-bottom: 20px;
+            max-width: 300px;
+            margin-bottom: 30px;
         }
         .content h1 {
-            font-size: 36px;
-            color: #333;
-            margin-bottom: 10px;
+            font-size: 56px;
+            font-weight: 700;
+            color: #0077ff;
+            margin-bottom: 20px;
+        }
+        .content h2 {
+            color: #0077ff;
+            margin-bottom: 25px;
+            font-size: 32px;
         }
         .content p {
-            font-size: 18px;
             color: #666;
-            max-width: 800px;
-            margin: 10px 0;
+            margin-bottom: 25px;
+            font-size: 18px;
         }
-        .content .contact-info {
-            margin-top: 20px;
+        .contact-info {
+            margin-top: 30px;
             font-size: 16px;
-            color: #333;
         }
-        .content .contact-info a {
+        .contact-info a {
             color: #0077ff;
             text-decoration: none;
+            transition: color 0.4s ease;
         }
-        .content .contact-info a:hover {
-            text-decoration: underline;
+        .contact-info a:hover {
+            color: #0055cc;
+        }
+        /* Custom Animations */
+        @keyframes fadeInCustom {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            nav {
+                top: 10px;
+                right: 10px;
+            }
+            nav a {
+                margin: 0 10px;
+                display: block;
+            }
+            .content {
+                margin: 30px auto;
+                padding: 20px;
+            }
+            .content h1 {
+                font-size: 40px;
+            }
+            .content h2 {
+                font-size: 28px;
+            }
         }
     </style>
 </head>
@@ -69,12 +122,12 @@
         <a href="index.html">Design</a>
     </nav>
     <div class="content">
-        <img src="images/CMB.png" alt="Colton's Metal Buildings Logo">
-        <h1>About Colton's Metal Buildings</h1>
-        <p>Founded in 2024, Colton's Metal Buildings has grown to become a trusted name in the metal construction industry. Based in the heart of Missouri, we serve clients across the region, delivering custom metal buildings that combine functionality, durability, and style.</p>
+        <img src="images/CMBtrans.png" alt="Colton's Metal Buildings Logo">
+        <h1>Our Story</h1>
+        <h2>About Colton's Metal Buildings</h2>
+        <p>Founded in 2024, Colton's Metal Buildings has quickly become a trusted name in the metal construction industry. Based in the heart of Missouri, we serve clients across the region, delivering custom metal buildings that combine functionality, durability, and style.</p>
         <p>Our mission is simple: to provide high-quality metal structures that meet the unique needs of our customers. From agricultural barns to commercial warehouses, we’ve built a reputation for excellence through our commitment to craftsmanship and customer satisfaction.</p>
         <p>Our team of experienced designers and builders works closely with each client to ensure every project is completed on time and within budget. We use only the best materials and employ advanced construction techniques to guarantee that your building will withstand the elements for years to come.</p>
-        <p>At Colton's Metal Buildings, we believe in making the design process as seamless as possible. That’s why we’ve developed our interactive 3D design tool, allowing you to visualize and customize your building with ease.</p>
         <div class="contact-info">
             <p>Have questions or ready to start your project? Reach out to us!</p>
             <p>Phone: <a href="tel:775-741-2591">775-741-2591</a></p>
