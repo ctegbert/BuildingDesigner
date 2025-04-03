@@ -86,6 +86,7 @@ document.getElementById("widthControl").addEventListener("input", updateBuilding
 document.getElementById("heightControl").addEventListener("input", updateBuilding);
 document.getElementById("lengthControl").addEventListener("input", updateBuilding);
 document.getElementById("zoomControl").addEventListener("input", updateZoom);
+document.getElementById("pitchControl").addEventListener("input", updateBuilding); // New event listener for pitch
 document.getElementById("buildingColorControl").addEventListener("click", function(event) {
     if (event.target.classList.contains('color-option')) {
         document.querySelectorAll('#buildingColorControl .color-option').forEach(el => el.removeAttribute('selected'));

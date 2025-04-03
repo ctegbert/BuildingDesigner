@@ -14,7 +14,7 @@ document.getElementById('container').appendChild(renderer.domElement);
 const buildingMaterial = new THREE.MeshBasicMaterial({ color: 0x0077ff, side: THREE.FrontSide });
 const roofMaterial = new THREE.MeshBasicMaterial({
     color: 0x808080,
-    side: THREE.DoubleSide,  // Changed to DoubleSide to render both faces
+    side: THREE.DoubleSide,
     polygonOffset: true,
     polygonOffsetFactor: 1,
     polygonOffsetUnits: 1
@@ -57,6 +57,7 @@ function createBuilding() {
     const width = +document.getElementById("widthControl").value;
     const height = +document.getElementById("heightControl").value;
     const length = +document.getElementById("lengthControl").value;
+    const pitch = +document.getElementById("pitchControl").value; // New pitch value (e.g., 0.5 to 2.0)
     const roofStyle = document.getElementById("roofControl").value;
 
     scene.remove(building);
@@ -72,14 +73,15 @@ function createBuilding() {
         roof = new THREE.Mesh(roofGeometry, roofMaterial);
         roof.position.y = height + 0.25;
     } else if (roofStyle === "gabled") {
-        // Hip roof with a central peak and four sloping sides
+        // Hip roof with adjustable pitch
+        const roofHeight = 2.5 * pitch; // Scale roof height based on pitch
         const roofGeometry = new THREE.BufferGeometry();
         const vertices = new Float32Array([
             -width / 2 - 0.2, height, -length / 2 - 0.2,  // 0: Bottom left front
             width / 2 + 0.2, height, -length / 2 - 0.2,   // 1: Bottom right front
             width / 2 + 0.2, height, length / 2 + 0.2,    // 2: Bottom right back
             -width / 2 - 0.2, height, length / 2 + 0.2,   // 3: Bottom left back
-            0, height + 2.5, 0,                           // 4: Central peak
+            0, height + roofHeight, 0,                     // 4: Central peak
         ]);
         const indices = [
             0, 1, 4,  // Front face
@@ -94,14 +96,16 @@ function createBuilding() {
         roofGeometry.computeVertexNormals();
         roof = new THREE.Mesh(roofGeometry, roofMaterial);
     } else if (roofStyle === "aframe") {
+        // A-frame roof with adjustable pitch
+        const roofHeight = 2.5 * pitch; // Scale roof height based on pitch
         const roofGeometry = new THREE.BufferGeometry();
         const vertices = new Float32Array([
             -width / 2 - 0.2, height, -length / 2 - 0.2,  // 0: Bottom left front
             width / 2 + 0.2, height, -length / 2 - 0.2,   // 1: Bottom right front
             width / 2 + 0.2, height, length / 2 + 0.2,    // 2: Bottom right back
             -width / 2 - 0.2, height, length / 2 + 0.2,   // 3: Bottom left back
-            0, height + 2.5, -length / 2 - 0.2,           // 4: Ridge front
-            0, height + 2.5, length / 2 + 0.2,            // 5: Ridge back
+            0, height + roofHeight, -length / 2 - 0.2,    // 4: Ridge front
+            0, height + roofHeight, length / 2 + 0.2,     // 5: Ridge back
         ]);
         const indices = [
             0, 1, 4,
